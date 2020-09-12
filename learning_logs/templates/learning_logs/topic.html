@@ -1,0 +1,26 @@
+{% extends 'learning_logs/base.html' %}
+{% block header %}
+<h2>{{ topic }}</h2>
+{% endblock header %}
+{% block content %}
+<p>
+<a href="{% url 'learning_logs:new_entry' topic.id %}">添加新条目</a>
+</p>
+{% for entry in entries %}
+<div class="panel panel-default">  <!-- 创建了一个面板式div元素（而不是将每个条目作为一个列表项） -->
+    <div class="panel-heading">  <!-- 一个面板标题（panel-heading）div -->
+        <h3>  <!-- 一个面板主体（panel-body）div -->
+            {{ entry.date_added|date:'M d, Y H:i' }}
+            <small>  <!-- 使用了标签<small>，使其比时间戳小些 -->
+                <a href="{% url 'learning_logs:edit_entry' entry.id %}">标记条目</a>
+            </small>
+        </h3>
+    </div>
+    <div class="panel-body">  <!-- 面板主体div，其中包含条目的实际文本 -->
+        {{ entry.text|linebreaks }}
+    </div>
+</div> <!-- panel -->
+{% empty %}
+该主题下还没有条目哦！.
+{% endfor %}
+{% endblock content %}

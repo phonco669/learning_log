@@ -1,0 +1,16 @@
+{% extends "learning_logs/base.html" %}
+{% load bootstrap3 %}
+{% block header %}
+<h2>登录你的账户.</h2>
+{% endblock header %}
+{% block content %}
+<form method="post" action="{% url 'users:login' %}" class="form">  <!-- 添加了属性class="form" -->
+    {% csrf_token %}
+    {% bootstrap_form form %}  <!-- 使用模板标签{% bootstrap_form %}来显示表单,这个标签替换了我们在第19章使用的标签{{ form.as_p }} -->
+    {% buttons %}
+    <button name="提交" class="btn btn-primary">登录</button>
+    {% endbuttons %}
+    <!-- 实参value告诉Django在用户成功登录后将其重定向到什么地方 —— 在这里是主页 -->
+    <input type="hidden" name="next" value="{% url 'learning_logs:index' %}" />
+</form>
+{% endblock content %}

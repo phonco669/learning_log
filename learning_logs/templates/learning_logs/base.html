@@ -1,0 +1,48 @@
+{% load bootstrap3 %}  <!-- 我们加载了django-bootstrap3中的模板标签集 -->
+<!DOCTYPE html>  <!-- 编写html文档 -->
+<html lang="en">  <!-- 声明使用英语 -->
+    <head>  <!-- 头部开始 -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-cale=1">
+    <title>Learning Log</title>  <!-- 标题 -->
+    {% bootstrap_css %}  <!-- 使用了django-bootstrap3的一个自定义模板标签，它让Django包含所有的Bootstrap样式文件 -->
+    {% bootstrap_javascript %}
+</head>  <!-- 头部结束 -->
+
+<body>
+    <!-- 开始使用Static navbar（导航栏）的样式 -->
+    <nav class="navbar navbar-default navbar-static-top">  <!-- 1 -->
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"  aria-expanded="false" aria-controls="navbar">    <!-- 2 -->
+                </button>
+                <a class="navbar-brand" href="{% url 'learning_logs:index' %}">Learning Log</a>  <!-- 3 -->
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">  <!-- 4 -->
+                <ul class="nav navbar-nav">  <!-- 5 -->
+                    <li><a href="{% url 'learning_logs:topics' %}">Topics</a></li>  <!-- 6 -->
+                </ul>
+                <ul class="nav navbar-nav navbar-right">  <!-- 7 -->
+                    {% if user.is_authenticated %}
+                        <li><a>hello, {{ user.username }}.</a></li>
+                        <li><a href="{% url 'users:logout' %}">退出</a></li>
+                    {% else %}
+                        <li><a href="{% url 'users:register' %}">注册</a></li>
+                        <li><a href="{% url 'users:login' %}">登录</a></li>
+                    {% endif %}
+                </ul>  <!-- 余下的代码结束包含导航栏的元素 -->
+            </div><!--/.nav=collapse-->
+        </div>
+    </nav>
+    <div class="container">  <!-- 1 -->
+        <div class="page-header">
+            {% block header %}{% endblock header %}  <!-- 2 -->
+        </div>
+        <div>
+            {% block content %}{% endblock content %}  <!-- 3 -->
+           </div>
+        </div>  <!-- /container -->
+
+</body>
+</html>
